@@ -1,13 +1,15 @@
 #include "../include/clock.h"
-#include "../include/globals.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <pthread.h>
 
-unsigned int _CLOCK;
-void* start_clock(){
-    _CLOCK = 0;
-    while (1){
+unsigned int _CLOCK = 0;
+pthread_mutex_t clock_mutex;
+void * start_clock(void* args){
+    
+    while (1)
+    {
+        pthread_mutex_lock(&clock_mutex);
         _CLOCK++;
+        pthread_mutex_unlock(&clock_mutex);
     }
+    
 }

@@ -1,4 +1,12 @@
 #ifndef _CLOCK_H
 #define _CLOCK_H
-void* start_clock();
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "globals.h"
+#include <pthread.h>
+void * start_clock(void * args);
+
 #endif

@@ -2,13 +2,14 @@
 
 unsigned int _CLOCK;
 void* start_timer(void * args){
-    unsigned int frequency = 1000000;
-    while (1){    
+
+    unsigned int frequency = (int)args;
+    while (1){
         if(_CLOCK < frequency){
-            _CLOCK++;
+            continue;
         }
         _CLOCK = 0;
-        printf("%d\n",_CLOCK);
+        printf("%d\n",frequency);
     }
 
 }
