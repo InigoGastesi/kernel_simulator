@@ -10,8 +10,8 @@ int main(int argc, char *argv[]){
     }
 
     pthread_t timerId, clockId;
-    pthread_create(&timerId, NULL, &start_timer, (void*)freq);
-    pthread_create(&clockId, NULL, &start_clock, NULL);
+    pthread_create(&timerId, NULL, &start_timer, NULL);
+    pthread_create(&clockId, NULL, &start_clock, (void*)freq);
     pthread_join(clockId, NULL);
     return 0;
 }
