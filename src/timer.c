@@ -12,6 +12,11 @@ void* start_timer(void * args){
 
         pthread_cond_wait(&_CLOCK_MUTEX_COND, &_CLOCK_MUTEX);
         
+        //process generator
+        pthread_mutex_lock(&_PRO_GEN_MUTEX);
+        pthread_cond_signal(&_PRO_GEN_MUTEX_COND);
+        pthread_mutex_unlock(&_PRO_GEN_MUTEX);
+
         printf("tick\n");
         pthread_cond_signal(&_TIMER_MUTEX_COND);
         pthread_mutex_unlock(&_CLOCK_MUTEX);

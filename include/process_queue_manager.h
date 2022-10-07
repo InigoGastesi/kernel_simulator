@@ -7,4 +7,5 @@
 #include <pthread.h>
 void *process_generator(void * args);
 void add_pcb(process_queue *processQueue);
+void print_processQueue(process_queue *processQueue);
 #endif
