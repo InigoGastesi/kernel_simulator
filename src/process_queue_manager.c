@@ -27,15 +27,12 @@ void add_pcb(process_queue *processQueue){
     pcb *new_process;
     new_process = malloc(sizeof(pcb));
     if (processQueue->first == NULL){
-        new_process->pid=0;
+        new_process->pid=_PID;
         processQueue->first=new_process;
         processQueue->last=new_process;
     }
     else{
-        
-        int pid = processQueue->last->pid + 1;
-        printf("pid:%d\n", pid);
-        new_process->pid = pid;
+        new_process->pid = _PID+1;
         new_process->prev = processQueue->last;
         processQueue->last->next=new_process;
         processQueue->last=new_process;

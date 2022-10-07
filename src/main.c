@@ -10,7 +10,7 @@ pthread_cond_t _PRO_GEN_MUTEX_COND = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t _CLOCK_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t _PRO_GEN_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 
-
+unsigned int _PID=0;
 
 int main(int argc, char *argv[]){
     pthread_t timerId, clockId, proGenId;
