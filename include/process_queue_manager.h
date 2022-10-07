@@ -1,6 +1,5 @@
-#ifndef _PROCESS_GENERATOR_H
-#define _PROCESS_GENERATOR_H
-
+#ifndef _PROCESS_QUEUE_h
+#define _PROCESS_QUEUE_h
 #include "globals.h"
 #include "structs.h"
 #include <stdio.h>
