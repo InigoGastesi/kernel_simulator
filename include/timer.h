@@ -6,5 +6,6 @@
 #include <string.h>
 #include <unistd.h>
 #include "globals.h"
+#include "structs.h"
 void* start_timer(void * args);
 #endif

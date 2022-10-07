@@ -3,9 +3,8 @@
 
 // unsigned int _CLOCK;
 // pthread_mutex_t _CLOCK_MUTEX;
-pthread_cond_t _CLOCK_MUTEX_COND = PTHREAD_COND_INITIALIZER;
-pthread_cond_t _TIMER_MUTEX_COND = PTHREAD_COND_INITIALIZER;
-pthread_mutex_t _CLOCK_MUTEX = PTHREAD_MUTEX_INITIALIZER;
+
+
 void* start_timer(void * args){
 
     while (1){

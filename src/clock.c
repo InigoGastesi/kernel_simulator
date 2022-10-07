@@ -2,12 +2,12 @@
 #include <pthread.h>
 
 void * start_clock(void* args){
-    unsigned int frequency = (int)args;
+    unsigned int period = (unsigned int)args;
     unsigned int clock = 0;
     while (1)
     {
         pthread_mutex_lock(&_CLOCK_MUTEX);
-        while (clock < frequency)
+        while (clock < period)
         {
             clock++;
         }

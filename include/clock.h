@@ -6,6 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "globals.h"
+#include "structs.h"
 #include <pthread.h>
 void * start_clock(void * args);
 
