@@ -1,18 +1,18 @@
 #ifndef _STRUCTS_H
 #define _STRUCTS_H
-typedef struct process{
-    struct process *prev;
-    struct process *next;
-    int pid;
-} process;
-
 typedef struct pcb{
-    struct process *first;
-    struct process *last;
+    struct pcb *prev;
+    struct pcb *next;
+    int pid;
 } pcb;
 
-typedef struct pro_gen_args_structs{
+typedef struct process_queue{
+    struct pcb *first;
+    struct pcb *last;
+} process_queue;
+
+typedef struct pro_gen_args{
     unsigned int period;
-    struct pcb *procces_control;
+    struct process_queue *process_control;
 }pro_gen_args;
 #endif

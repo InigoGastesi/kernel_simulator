@@ -12,10 +12,10 @@ pthread_mutex_t _PRO_GEN_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 
 int main(int argc, char *argv[]){
     pthread_t timerId, clockId, proGenId;
-    pcb *procces_control = malloc(sizeof(pcb));
+    process_queue *process_control = malloc(sizeof(process_queue));
     pro_gen_args *proGenArgs = malloc(sizeof(pro_gen_args));
     proGenArgs->period=10;
-    proGenArgs->procces_control=procces_control;
+    proGenArgs->process_control=process_control;
     int period = 100000;
     if (argc ==2){
         period = atoi(argv[1]);
