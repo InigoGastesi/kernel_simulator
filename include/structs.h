@@ -13,6 +13,6 @@ typedef struct process_queue{
 
 typedef struct pro_gen_args{
     unsigned int period;
-    struct process_queue *process_control;
+    struct process_queue *processQueue;
 }pro_gen_args;
 #endif
