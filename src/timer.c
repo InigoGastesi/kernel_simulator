@@ -6,21 +6,21 @@
 
 
 void* start_timer(void * args){
-
+    unsigned int counter=0;
+    unsigned int period = 100000;
+    pthread_mutex_lock(&_CLOCK_MUTEX);
     while (1){
-        pthread_mutex_lock(&_CLOCK_MUTEX);
-
-        pthread_cond_wait(&_CLOCK_MUTEX_COND, &_CLOCK_MUTEX);
         
+        _DONE++;
+        counter++;
         //process generator
-        pthread_mutex_lock(&_PRO_GEN_MUTEX);
-        pthread_cond_signal(&_PRO_GEN_MUTEX_COND);
-        pthread_mutex_unlock(&_PRO_GEN_MUTEX);
-
-        printf("tick\n");
-        pthread_cond_signal(&_TIMER_MUTEX_COND);
-        pthread_mutex_unlock(&_CLOCK_MUTEX);
         
+        if(counter > period){
+            printf("tick %d\n", counter);
+            pthread_cond_signal(&_PRO_GEN_MUTEX_COND);
+            counter = 0;
+        }
+        pthread_cond_signal(&_TIMER_MUTEX_COND);
+        pthread_cond_wait(&_CLOCK_MUTEX_COND, &_CLOCK_MUTEX);
     }
-
 }

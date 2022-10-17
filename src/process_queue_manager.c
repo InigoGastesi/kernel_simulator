@@ -9,7 +9,7 @@ void *process_generator(void * args){
     
 
     while(1){
-        pthread_mutex_lock(&_PRO_GEN_MUTEX);
+        
         while(counter < period){
             pthread_cond_wait(&_PRO_GEN_MUTEX_COND, &_PRO_GEN_MUTEX);
             counter++;
@@ -19,7 +19,6 @@ void *process_generator(void * args){
         add_pcb(processQueue);
         print_processQueue(processQueue);
         
-        pthread_mutex_unlock(&_PRO_GEN_MUTEX);
     }
 }
 
@@ -32,7 +31,8 @@ void add_pcb(process_queue *processQueue){
         processQueue->last=new_process;
     }
     else{
-        new_process->pid = _PID+1;
+        _PID++;
+        new_process->pid = _PID;
         new_process->prev = processQueue->last;
         processQueue->last->next=new_process;
         processQueue->last=new_process;
