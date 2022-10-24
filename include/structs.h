@@ -16,5 +16,13 @@ typedef struct pro_gen_args{
     struct process_queue *processQueue;
 }pro_gen_args;
 
+typedef struct timer_args{
+    unsigned int period;
+}timer_args;
+
+typedef struct clock_args{
+    unsigned int timer_kop;
+}clock_args;
+
 
 #endif

@@ -2,7 +2,8 @@
 #include <pthread.h>
 
 void * start_clock(void* args){
-    unsigned int temp_kop = (unsigned int)args;
+    clock_args* arguments = (clock_args *)args;
+    unsigned int temp_kop = arguments->timer_kop;
     unsigned int clock = 0;
     while (1)
     {

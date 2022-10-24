@@ -18,17 +18,51 @@ int main(int argc, char *argv[]){
     pthread_t timerId, clockId, proGenId;
     process_queue *processQueue = malloc(sizeof(process_queue));
     pro_gen_args *proGenArgs = malloc(sizeof(pro_gen_args));
-
-    proGenArgs->period=10;
+    timer_args *timerArgs = malloc(sizeof(timer_args));
+    clock_args *clockArgs = malloc(sizeof(clock_args));
     proGenArgs->processQueue=processQueue;
+    proGenArgs->period=10;
+    timerArgs->period=1000;
+    clockArgs->timer_kop=1;
+    int opt;
 
-    unsigned int temp_kop = 1;
-    if (argc ==2){
-        temp_kop = atoi(argv[1]);
+    while(opt = getopt(argc, argv, "hp:t:c:") != -1){
+        switch (opt){
+            case 'p':
+                proGenArgs->period=atoi(optarg);
+                printf("p argumentua %s\n", optarg);
+                break;
+            case 't':
+                clockArgs->timer_kop=atoi(optarg);
+                break;
+            case 'c':
+                timerArgs->period=atoi(optarg);
+                break;
+            case 'h':
+                printf("\tp: process generator-en periodoa\n\tt: timer kopurua\n\tc: erlojuaren periodoa\n");
+                exit(0);
+                break;
+            case ':':
+                printf("option needs a value\n"); 
+                break; 
+        }
     }
+    for (int i = optind; i < argc; i++){
+        printf ("\tNon-option argument %s\n", argv[i]);
+    }
+
+    printf("\tAukeratutako argumentuak:\n\
+            p: process generator-en periodoa: %d\n\
+            t: timer kopurua: %d\n\
+            c: erlojuaren periodoa: %d\n",proGenArgs->period,clockArgs->timer_kop,timerArgs->period);
+
+    sleep (5);
+
+
+    proGenArgs->processQueue=processQueue;
     pthread_create(&proGenId, NULL, &process_generator, proGenArgs);
-    pthread_create(&timerId, NULL, &start_timer, NULL);
-    pthread_create(&clockId, NULL, &start_clock, (void*)temp_kop);
+    pthread_create(&timerId, NULL, &start_timer, timerArgs);
+    pthread_create(&clockId, NULL, &start_clock, clockArgs);
     pthread_join(clockId, NULL);
     return 0;
 }

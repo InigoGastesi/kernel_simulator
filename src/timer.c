@@ -6,8 +6,9 @@
 
 
 void* start_timer(void * args){
+    timer_args* arguments = (timer_args *)args;
     unsigned int counter=0;
-    unsigned int period = 100000;
+    unsigned int period = arguments->period;
     pthread_mutex_lock(&_CLOCK_MUTEX);
     while (1){
         
