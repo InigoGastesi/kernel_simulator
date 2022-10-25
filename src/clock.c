@@ -1,10 +1,8 @@
 #include "../include/clock.h"
-#include <pthread.h>
 
 void * start_clock(void* args){
     clock_args* arguments = (clock_args *)args;
     unsigned int temp_kop = arguments->timer_kop;
-    unsigned int clock = 0;
     while (1)
     {
         pthread_mutex_lock(&_CLOCK_MUTEX);

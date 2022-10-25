@@ -12,17 +12,21 @@ typedef struct process_queue{
 } process_queue;
 
 typedef struct pro_gen_args{
-    unsigned int period;
     struct process_queue *processQueue;
 }pro_gen_args;
 
 typedef struct timer_args{
     unsigned int period;
+    char function;
 }timer_args;
 
 typedef struct clock_args{
     unsigned int timer_kop;
 }clock_args;
+
+typedef struct cpu{
+    unsigned int core;
+}cpu;
 
 
 #endif
