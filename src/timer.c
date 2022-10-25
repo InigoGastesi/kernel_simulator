@@ -18,7 +18,7 @@ void* start_timer(void * args){
         
         if(counter > period){
             printf("tick %d\n", counter);
-            pthread_cond_signal(&_PRO_GEN_MUTEX_COND);
+            sem_post(&_PRO_GEN_SEM);
             counter = 0;
         }
         pthread_cond_signal(&_TIMER_MUTEX_COND);

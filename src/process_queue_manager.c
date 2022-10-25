@@ -11,7 +11,7 @@ void *process_generator(void * args){
     while(1){
         
         while(counter < period){
-            pthread_cond_wait(&_PRO_GEN_MUTEX_COND, &_PRO_GEN_MUTEX);
+            sem_wait(&_PRO_GEN_SEM);
             counter++;
             printf("process gen counter:%d\n", counter);
         }

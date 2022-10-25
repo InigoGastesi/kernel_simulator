@@ -10,6 +10,8 @@ pthread_cond_t _PRO_GEN_MUTEX_COND = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t _CLOCK_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t _PRO_GEN_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 
+sem_t _PRO_GEN_SEM;
+
 
 unsigned int _PID=0;
 unsigned int _DONE=0;
@@ -20,9 +22,10 @@ int main(int argc, char *argv[]){
     pro_gen_args *proGenArgs = malloc(sizeof(pro_gen_args));
     timer_args *timerArgs = malloc(sizeof(timer_args));
     clock_args *clockArgs = malloc(sizeof(clock_args));
+    sem_init(&_PRO_GEN_SEM, 0, 1);
     proGenArgs->processQueue=processQueue;
     proGenArgs->period=10;
-    timerArgs->period=1000;
+    timerArgs->period=100000;
     clockArgs->timer_kop=1;
     int opt;
 
