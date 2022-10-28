@@ -1,12 +1,11 @@
 #include "../include/timer.h"
-#include <pthread.h>
 
 // unsigned int _CLOCK;
 // pthread_mutex_t _CLOCK_MUTEX;
 
 
 void* start_timer(void * args){
-    timer_args* arguments = (timer_args *)args;
+    timer_args *arguments = (timer_args *)args;
     unsigned int counter=0;
     unsigned int period = arguments->period;
     char function = arguments->function;
@@ -16,7 +15,9 @@ void* start_timer(void * args){
     case 'p':
         sem = &_PRO_GEN_SEM;
         break;
-    
+    case 's':
+        sem = &_SCHE_SEM;
+        break;
     default:
         break;
     }
@@ -27,7 +28,7 @@ void* start_timer(void * args){
         //process generator
         
         if(counter > period){
-            printf("tick %d\n", counter);
+            printf("tick\n");
             sem_post(sem);
             counter = 0;
         }

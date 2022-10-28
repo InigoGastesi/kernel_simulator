@@ -1,5 +1,4 @@
 #include "../include/process_queue_manager.h"
-#include <pthread.h>
 
 void *process_generator(void * args){
     pro_gen_args *arguments = (pro_gen_args * )args;
