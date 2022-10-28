@@ -44,7 +44,6 @@ int main(int argc, char **argv){
         switch (opt){
             case 'p':
                 timerProGenArgs->period=atoi(optarg);
-                printf("p argumentua %s\n", optarg);
                 break;
             case 's':
                 timerScheArgs->period=atoi(optarg);
@@ -54,8 +53,13 @@ int main(int argc, char **argv){
                 exit(0);
                 break;
             case ':':
-                printf("option needs a value\n"); 
-                break; 
+                printf("option needs a value\n");
+                exit(0);
+                break;
+            case '?':
+                printf("\tp: process generator-en periodoa\n\tt: timer kopurua\n\tc: erlojuaren periodoa\n");
+                exit(0);
+                break;
         }
     }
     for (int i = optind; i < argc; i++){

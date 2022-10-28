@@ -8,6 +8,6 @@
 #include "globals.h"
 #include "structs.h"
 #include <pthread.h>
-void * start_clock(void * args);
+void *start_clock(void *args);
 
 #endif

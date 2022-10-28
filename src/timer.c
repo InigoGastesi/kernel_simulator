@@ -10,16 +10,15 @@ void* start_timer(void * args){
     unsigned int period = arguments->period;
     char function = arguments->function;
     sem_t *sem;
-    switch (function)
-    {
-    case 'p':
-        sem = &_PRO_GEN_SEM;
-        break;
-    case 's':
-        sem = &_SCHE_SEM;
-        break;
-    default:
-        break;
+    switch (function){
+        case 'p':
+            sem = &_PRO_GEN_SEM;
+            break;
+        case 's':
+            sem = &_SCHE_SEM;
+            break;
+        default:
+            break;
     }
     pthread_mutex_lock(&_CLOCK_MUTEX);
     while (1){
