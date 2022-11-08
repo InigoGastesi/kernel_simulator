@@ -1,20 +1,16 @@
 #include "../include/process_queue_manager.h"
-#include <pthread.h>
 
 void *process_generator(void * args){
     pro_gen_args *arguments = (pro_gen_args * )args;
     unsigned int counter = 0;
-    unsigned int period = arguments->period;
     process_queue *processQueue = arguments->processQueue;
     
 
     while(1){
         
-        while(counter < period){
-            pthread_cond_wait(&_PRO_GEN_MUTEX_COND, &_PRO_GEN_MUTEX);
-            counter++;
-            printf("process gen counter:%d\n", counter);
-        }
+        sem_wait(&_PRO_GEN_SEM);
+        printf("process gen counter:%d\n", counter);
+        
         counter = 0;
         add_pcb(processQueue);
         print_processQueue(processQueue);
@@ -23,8 +19,7 @@ void *process_generator(void * args){
 }
 
 void add_pcb(process_queue *processQueue){
-    pcb *new_process;
-    new_process = malloc(sizeof(pcb));
+    pcb *new_process = malloc(sizeof(pcb));
     if (processQueue->first == NULL){
         new_process->pid=_PID;
         processQueue->first=new_process;
