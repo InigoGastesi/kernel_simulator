@@ -7,10 +7,7 @@ void *process_generator(void * args){
     
 
     while(1){
-        
-        sem_wait(&_PRO_GEN_SEM);
-        printf("process gen counter:%d\n", counter);
-        
+        sem_wait(&_PRO_GEN_SEM);        
         counter = 0;
         add_pcb(processQueue);
         print_processQueue(processQueue);
@@ -36,6 +33,8 @@ void add_pcb(process_queue *processQueue){
 
 void print_processQueue(process_queue *processQueue){
     pcb *process = processQueue->first;
+    printf("-----------------------------------------------------------\n");
+    printf("process queue-aren edukiak\n");
     while (process != NULL){
         printf("Process pid:%d\n", process->pid);
         process=process->next;

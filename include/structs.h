@@ -24,9 +24,23 @@ typedef struct clock_args{
     unsigned int timer_kop;
 }clock_args;
 
-typedef struct cpu{
-    unsigned int core;
-}cpu;
+typedef struct thread{
+    int id;
+    struct pcb* process;
+} thread;
 
+typedef struct core{
+    struct thread* threads;
+    int id;
+} core;
+
+typedef struct cpu{
+    struct core* cores;
+    int id;
+} cpu;
+
+typedef struct machine{
+    struct cpu* cpus;
+} machine;
 
 #endif

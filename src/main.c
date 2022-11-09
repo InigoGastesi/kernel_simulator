@@ -34,9 +34,9 @@ int main(int argc, char **argv){
     sem_init(&_SCHE_SEM, 0, 0);
     
     proGenArgs->processQueue=processQueue;
-    timerProGenArgs->period=1000;
+    timerProGenArgs->period=10000;
     timerProGenArgs->function='p';
-    timerScheArgs->period=1000;
+    timerScheArgs->period=10000;
     timerScheArgs->function='s';
     clockArgs->timer_kop=2;
     int opt;
@@ -49,7 +49,7 @@ int main(int argc, char **argv){
                 timerScheArgs->period=atoi(optarg);
                 break;
             case 'h':
-                printf("\tp: process generator-en periodoa\n\tt: timer kopurua\n\tc: erlojuaren periodoa\n");
+                printf("\t[-p][process generator-en periodoa]\n\t[-t][timer kopurua]\n");
                 exit(0);
                 break;
             case ':':
@@ -57,7 +57,7 @@ int main(int argc, char **argv){
                 exit(0);
                 break;
             case '?':
-                printf("\tp: process generator-en periodoa\n\tt: timer kopurua\n\tc: erlojuaren periodoa\n");
+                printf("\t[-p][process generator-en periodoa]\n\t[-t][timer kopurua]\n");
                 exit(0);
                 break;
         }

@@ -5,11 +5,13 @@
 
 
 void* start_timer(void * args){
+    //argumentuak jaso
     timer_args *arguments = (timer_args *)args;
     unsigned int counter=0;
     unsigned int period = arguments->period;
     char function = arguments->function;
     sem_t *sem;
+    //process_queue edo schedule-aren semaforoa hautatu
     switch (function){
         case 'p':
             sem = &_PRO_GEN_SEM;
@@ -22,12 +24,9 @@ void* start_timer(void * args){
     }
     pthread_mutex_lock(&_CLOCK_MUTEX);
     while (1){
-        
         counter++;
-        //process generator
-        
         if(counter > period){
-            printf("tick\n");
+            //seinalea bidali funtzionalitateari
             sem_post(sem);
             counter = 0;
         }
