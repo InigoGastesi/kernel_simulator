@@ -13,7 +13,7 @@ typedef struct pcb_list{
 } pcb_list;
 
 typedef struct pro_gen_args{
-    struct pcb_list *processQueue;
+    struct pcb_list *pcbList;
 }pro_gen_args;
 
 typedef struct timer_args{

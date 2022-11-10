@@ -7,6 +7,6 @@
 #include <pthread.h>
 #include <semaphore.h>
 void *process_generator(void * args);
-void add_pcb(pcb_list *processQueue);
-void print_processQueue(pcb_list *processQueue);
+void add_pcb(pcb_list *pcbList);
+void print_pcbList(pcb_list *pcbList);
 #endif

@@ -23,7 +23,7 @@ unsigned int _DONE=0;
 
 int main(int argc, char **argv){
     pthread_t timerProGenId, timerScheId, clockId, proGenId, scheId;
-    pcb_list *processQueue = malloc(sizeof(pcb_list));
+    pcb_list *pcbList = malloc(sizeof(pcb_list));
     pro_gen_args *proGenArgs = malloc(sizeof(pro_gen_args));
     timer_args *timerProGenArgs = malloc(sizeof(timer_args));
     timer_args *timerScheArgs = malloc(sizeof(timer_args));
@@ -34,7 +34,7 @@ int main(int argc, char **argv){
     sem_init(&_PRO_GEN_SEM, 0 ,0);
     sem_init(&_SCHE_SEM, 0, 0);
     
-    proGenArgs->processQueue=processQueue;
+    proGenArgs->pcbList=pcbList;
     timerProGenArgs->period=10000;
     timerProGenArgs->function='p';
     timerScheArgs->period=10000;
@@ -78,7 +78,7 @@ int main(int argc, char **argv){
     sleep (3);
 
 
-    proGenArgs->processQueue=processQueue;
+    proGenArgs->pcbList=pcbList;
     pthread_create(&proGenId, NULL, &process_generator, proGenArgs);
     pthread_create(&scheId, NULL, &schedule, NULL);
     pthread_create(&timerProGenId, NULL, &start_timer, timerProGenArgs);
