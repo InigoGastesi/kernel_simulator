@@ -28,6 +28,7 @@ int main(int argc, char **argv){
     timer_args *timerProGenArgs = malloc(sizeof(timer_args));
     timer_args *timerScheArgs = malloc(sizeof(timer_args));
     clock_args *clockArgs = malloc(sizeof(clock_args));
+    pcb **process_queue = malloc(atoi(optarg)*sizeof(pcb*));
     
 
     sem_init(&_PRO_GEN_SEM, 0 ,0);
@@ -47,6 +48,10 @@ int main(int argc, char **argv){
                 break;
             case 's':
                 timerScheArgs->period=atoi(optarg);
+                break;
+            case 'q':
+                free(process_queue);
+                process_queue = malloc(atoi(optarg)*sizeof(pcb*));
                 break;
             case 'h':
                 printf("\t[-p][process generator-en periodoa]\n\t[-t][timer kopurua]\n");
