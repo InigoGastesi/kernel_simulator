@@ -11,7 +11,6 @@ extern sem_t _SCHE_SEM;
 
 extern pthread_cond_t _CLOCK_MUTEX_COND;
 extern pthread_cond_t _TIMER_MUTEX_COND;
-extern pthread_cond_t _PRO_GEN_MUTEX_COND;
 
 extern unsigned int _PID;
 extern unsigned int _DONE;

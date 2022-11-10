@@ -3,7 +3,11 @@
 // unsigned int _CLOCK;
 // pthread_mutex_t _CLOCK_MUTEX;
 
-
+/**
+ * @brief timera hasieratzen da eta funtzionantzen hasten da.
+ * @param pro_gen_args timeraren periodoa eta 
+ * @return void
+ */
 void* start_timer(void * args){
     //argumentuak jaso
     timer_args *arguments = (timer_args *)args;
@@ -11,7 +15,7 @@ void* start_timer(void * args){
     unsigned int period = arguments->period;
     char function = arguments->function;
     sem_t *sem;
-    //process_queue edo schedule-aren semaforoa hautatu
+    //pcb_list edo schedule-aren semaforoa hautatu
     switch (function){
         case 'p':
             sem = &_PRO_GEN_SEM;

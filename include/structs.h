@@ -6,13 +6,14 @@ typedef struct pcb{
     int pid;
 } pcb;
 
-typedef struct process_queue{
+
+typedef struct pcb_list{
     struct pcb *first;
     struct pcb *last;
-} process_queue;
+} pcb_list;
 
 typedef struct pro_gen_args{
-    struct process_queue *processQueue;
+    struct pcb_list *processQueue;
 }pro_gen_args;
 
 typedef struct timer_args{

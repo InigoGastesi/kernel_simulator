@@ -1,6 +1,6 @@
 #include "../include/clock.h"
 #include "../include/timer.h"
-#include "../include/process_queue_manager.h"
+#include "../include/pcb_list_manager.h"
 #include "../include/schedule.h"
 #include <pthread.h>
 #include <ctype.h>
@@ -10,7 +10,6 @@
 
 pthread_cond_t _CLOCK_MUTEX_COND = PTHREAD_COND_INITIALIZER;
 pthread_cond_t _TIMER_MUTEX_COND = PTHREAD_COND_INITIALIZER;
-pthread_cond_t _PRO_GEN_MUTEX_COND = PTHREAD_COND_INITIALIZER;
 
 pthread_mutex_t _CLOCK_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t _PRO_GEN_MUTEX = PTHREAD_MUTEX_INITIALIZER;
@@ -24,11 +23,12 @@ unsigned int _DONE=0;
 
 int main(int argc, char **argv){
     pthread_t timerProGenId, timerScheId, clockId, proGenId, scheId;
-    process_queue *processQueue = malloc(sizeof(process_queue));
+    pcb_list *processQueue = malloc(sizeof(pcb_list));
     pro_gen_args *proGenArgs = malloc(sizeof(pro_gen_args));
     timer_args *timerProGenArgs = malloc(sizeof(timer_args));
     timer_args *timerScheArgs = malloc(sizeof(timer_args));
     clock_args *clockArgs = malloc(sizeof(clock_args));
+    
 
     sem_init(&_PRO_GEN_SEM, 0 ,0);
     sem_init(&_SCHE_SEM, 0, 0);
