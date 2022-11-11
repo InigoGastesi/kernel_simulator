@@ -1,5 +1,10 @@
 #include "../include/clock.h"
 
+/**
+ * @brief clock-a hasieratzen da eta martxan hasten da.
+ * @param clock_args timer kopurua
+ * @return
+ */
 void * start_clock(void* args){
     clock_args* arguments = (clock_args *)args;
     unsigned int temp_kop = arguments->timer_kop;

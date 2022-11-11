@@ -1,12 +1,10 @@
 #include "../include/timer.h"
 
-// unsigned int _CLOCK;
-// pthread_mutex_t _CLOCK_MUTEX;
 
 /**
  * @brief timera hasieratzen da eta funtzionantzen hasten da.
- * @param pro_gen_args timeraren periodoa eta 
- * @return void
+ * @param timer_args timeraren periodoa eta semaforoaren aukera, 'p' porcess generator, 's' scheduler
+ * @return
  */
 void* start_timer(void * args){
     //argumentuak jaso
