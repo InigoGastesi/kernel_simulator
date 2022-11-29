@@ -2,6 +2,7 @@
 #include "../include/timer.h"
 #include "../include/pcb_list_manager.h"
 #include "../include/schedule.h"
+#include "../include/pcb_queue_manager.h"
 #include <pthread.h>
 #include <ctype.h>
 #include <unistd.h>
@@ -28,7 +29,9 @@ int main(int argc, char **argv){
     timer_args *timerProGenArgs = malloc(sizeof(timer_args));
     timer_args *timerScheArgs = malloc(sizeof(timer_args));
     clock_args *clockArgs = malloc(sizeof(clock_args));
-    pcb **process_queue = malloc(atoi(optarg)*sizeof(pcb*));
+    process_queue *processQueue = malloc(sizeof(process_queue));
+    processQueue->queue=malloc(100*sizeof(pcb*));
+    processQueue->size = 100;
     
 
     sem_init(&_PRO_GEN_SEM, 0 ,0);
@@ -50,8 +53,9 @@ int main(int argc, char **argv){
                 timerScheArgs->period=atoi(optarg);
                 break;
             case 'q':
-                free(process_queue);
-                process_queue = malloc(atoi(optarg)*sizeof(pcb*));
+                free(processQueue->queue);
+                processQueue->queue = malloc(atoi(optarg)*sizeof(pcb*));
+                processQueue->size = atoi(optarg);
                 break;
             case 'h':
                 printf("\t[-p][process generator-en periodoa]\n\t[-t][timer kopurua]\n");

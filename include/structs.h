@@ -4,8 +4,27 @@ typedef struct pcb{
     struct pcb *prev;
     struct pcb *next;
     int pid;
+    int state;
+    int priority;
 } pcb;
 
+typedef struct rb_node{
+    pcb* process;
+    struct rb_node* left;
+    struct rb_node* right;
+}rb_node;
+
+typedef struct rb_tree{
+    rb_node* root;
+    rb_node* rb_leftmost;
+}rb_tree;
+
+
+typedef struct process_queue{
+    pcb** queue;
+    int size;
+    int first_free_position;
+} process_queue;
 
 typedef struct pcb_list{
     struct pcb *first;
