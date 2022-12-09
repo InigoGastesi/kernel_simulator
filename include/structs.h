@@ -10,6 +10,7 @@ typedef struct pcb{
 
 typedef struct rb_node{
     pcb* process;
+    struct rb_node* parent;
     struct rb_node* left;
     struct rb_node* right;
 }rb_node;
