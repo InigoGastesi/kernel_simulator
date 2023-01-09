@@ -43,7 +43,7 @@ void add_pcb_recursive(rb_node* node, pcb* process, rb_tree* tree){
     }
 }
 
-void add_pcb(rb_tree* tree, pcb* process){
+void add_pcb_tree(rb_tree* tree, pcb* process){
     if(tree->root == NULL){
         rb_node* new_node=malloc(sizeof(rb_node));
         new_node->process=process;

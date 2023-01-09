@@ -2,7 +2,8 @@
 #include "../include/timer.h"
 #include "../include/pcb_list_manager.h"
 #include "../include/schedule.h"
-#include "../include/pcb_queue_manager.h"
+#include "../include/fcfs.h"
+#include "../include/machine.h"
 #include <pthread.h>
 #include <ctype.h>
 #include <unistd.h>
@@ -30,8 +31,14 @@ int main(int argc, char **argv){
     timer_args *timerScheArgs = malloc(sizeof(timer_args));
     clock_args *clockArgs = malloc(sizeof(clock_args));
     process_queue *processQueue = malloc(sizeof(process_queue));
+    machine *machine = malloc(sizeof(machine));
+    int number_of_cpus = 1;
+    int number_of_cores = 1;
+    int number_of_threads = 1;
+
     processQueue->queue=malloc(100*sizeof(pcb*));
     processQueue->size = 100;
+    processQueue->last_pos = 0;
     
 
     sem_init(&_PRO_GEN_SEM, 0 ,0);
@@ -44,7 +51,7 @@ int main(int argc, char **argv){
     timerScheArgs->function='s';
     clockArgs->timer_kop=2;
     int opt;
-    while((opt = getopt(argc, argv, ":hp:s:")) != -1){
+    while((opt = getopt(argc, argv, ":hp:s:q:")) != -1){
         switch (opt){
             case 'p':
                 timerProGenArgs->period=atoi(optarg);
@@ -53,9 +60,10 @@ int main(int argc, char **argv){
                 timerScheArgs->period=atoi(optarg);
                 break;
             case 'q':
-                free(processQueue->queue);
-                processQueue->queue = malloc(atoi(optarg)*sizeof(pcb*));
-                processQueue->size = atoi(optarg);
+                free(processQueue);
+                processQueue = init_queue(atoi(optarg));
+                break;
+            case 'c':
                 break;
             case 'h':
                 printf("\t[-p][process generator-en periodoa]\n\t[-t][timer kopurua]\n");
@@ -74,10 +82,12 @@ int main(int argc, char **argv){
     for (int i = optind; i < argc; i++){
         printf ("\tNon-option argument %s\n", argv[i]);
     }
-
+    init_machine(machine, number_of_cpus, number_of_cores, number_of_threads);
+    print_machine(machine);
     printf("\tAukeratutako argumentuak:\n\
             p: process generator-en periodoa: %d\n\
-            s: schedule-aren periodoa: %d\n",timerProGenArgs->period,timerScheArgs->period);
+            s: schedule-aren periodoa: %d\n\
+            q: process queue-aren periodo: %d\n",timerProGenArgs->period,timerScheArgs->period, processQueue->size);
 
     sleep (3);
 

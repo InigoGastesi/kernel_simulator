@@ -6,6 +6,6 @@
 
 rb_tree* init_rb_tree();
 pcb* get_leftmost(rb_tree* tree);
-void add_pcb(rb_tree* tree, pcb* process);
+void add_pcb_tree(rb_tree* tree, pcb* process);
 
 #endif

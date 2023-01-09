@@ -24,7 +24,7 @@ typedef struct rb_tree{
 typedef struct process_queue{
     pcb** queue;
     int size;
-    int first_free_position;
+    int last_pos;
 } process_queue;
 
 typedef struct pcb_list{
@@ -51,17 +51,20 @@ typedef struct thread{
 } thread;
 
 typedef struct core{
-    struct thread* threads;
+    struct thread** threads;
     int id;
+    int number_of_threads;
 } core;
 
 typedef struct cpu{
-    struct core* cores;
+    struct core** cores;
     int id;
+    int number_of_cores;
 } cpu;
 
 typedef struct machine{
-    struct cpu* cpus;
+    struct cpu** cpus;
+    int number_of_cpus;
 } machine;
 
 #endif
