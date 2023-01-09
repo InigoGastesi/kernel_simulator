@@ -15,6 +15,7 @@ pthread_cond_t _TIMER_MUTEX_COND = PTHREAD_COND_INITIALIZER;
 
 pthread_mutex_t _CLOCK_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t _PRO_GEN_MUTEX = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t _SCHE_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 
 sem_t _PRO_GEN_SEM;
 sem_t _SCHE_SEM;
@@ -30,15 +31,13 @@ int main(int argc, char **argv){
     timer_args *timerProGenArgs = malloc(sizeof(timer_args));
     timer_args *timerScheArgs = malloc(sizeof(timer_args));
     clock_args *clockArgs = malloc(sizeof(clock_args));
-    process_queue *processQueue = malloc(sizeof(process_queue));
+    sche_args *scheArgs = malloc(sizeof(sche_args));
+    thread_args *threadArgs;
+    process_queue *fcfs = init_queue(10);
     machine *machine = malloc(sizeof(machine));
     int number_of_cpus = 1;
     int number_of_cores = 1;
     int number_of_threads = 1;
-
-    processQueue->queue=malloc(100*sizeof(pcb*));
-    processQueue->size = 100;
-    processQueue->last_pos = 0;
     
 
     sem_init(&_PRO_GEN_SEM, 0 ,0);
@@ -60,8 +59,8 @@ int main(int argc, char **argv){
                 timerScheArgs->period=atoi(optarg);
                 break;
             case 'q':
-                free(processQueue);
-                processQueue = init_queue(atoi(optarg));
+                free(fcfs);
+                fcfs = init_queue(atoi(optarg));
                 break;
             case 'c':
                 break;
@@ -82,19 +81,35 @@ int main(int argc, char **argv){
     for (int i = optind; i < argc; i++){
         printf ("\tNon-option argument %s\n", argv[i]);
     }
+
     init_machine(machine, number_of_cpus, number_of_cores, number_of_threads);
     print_machine(machine);
+    scheArgs->fcfs = fcfs;
+    scheArgs->machine = machine;
     printf("\tAukeratutako argumentuak:\n\
             p: process generator-en periodoa: %d\n\
             s: schedule-aren periodoa: %d\n\
-            q: process queue-aren periodo: %d\n",timerProGenArgs->period,timerScheArgs->period, processQueue->size);
+            q: process queue-aren periodo: %d\n",timerProGenArgs->period,timerScheArgs->period, fcfs->size);
 
     sleep (3);
 
-
+    for(int i = 0; i < machine->number_of_cpus; i++){
+        for(int j = 0; j < machine->cpus[i]->number_of_cores; j++){
+            for(int k = 0; k < machine->cpus[i]->cores[j]->number_of_threads; k++){
+                pthread_t threadId = i * j + k;
+                threadArgs = malloc(sizeof(thread_args));
+                threadArgs->machine = machine;
+                threadArgs->cpu_id = i;
+                threadArgs->core_id = j;
+                threadArgs->thread_id = k;
+                pthread_create(&threadId, NULL, &run_thread, threadArgs);
+            }
+        }
+    }
     proGenArgs->pcbList=pcbList;
+    proGenArgs->fcfs=fcfs;
     pthread_create(&proGenId, NULL, &process_generator, proGenArgs);
-    pthread_create(&scheId, NULL, &schedule, NULL);
+    pthread_create(&scheId, NULL, &schedule, scheArgs);
     pthread_create(&timerProGenId, NULL, &start_timer, timerProGenArgs);
     pthread_create(&timerScheId, NULL, &start_timer, timerScheArgs);
     pthread_create(&clockId, NULL, &start_clock, clockArgs);

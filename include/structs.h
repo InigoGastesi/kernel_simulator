@@ -34,6 +34,7 @@ typedef struct pcb_list{
 
 typedef struct pro_gen_args{
     struct pcb_list *pcbList;
+    struct process_queue *fcfs;
 }pro_gen_args;
 
 typedef struct timer_args{
@@ -44,6 +45,18 @@ typedef struct timer_args{
 typedef struct clock_args{
     unsigned int timer_kop;
 }clock_args;
+
+typedef struct sche_args{
+    struct machine *machine;
+    struct process_queue *fcfs;
+}sche_args;
+
+typedef struct thread_args{
+    unsigned int thread_id;
+    unsigned int core_id;
+    unsigned int cpu_id;
+    struct machine *machine;
+}thread_args;
 
 typedef struct thread{
     int id;

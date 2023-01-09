@@ -30,8 +30,29 @@ void print_machine(machine *machine){
             for(int k = 0; k < machine->cpus[i]->cores[j]->number_of_threads; k++){
                 printf("number of thread: %d\n", machine->cpus[i]->cores[j]->threads[k]->id);
             }
-            printf("@@@@@@@@@@@@@@@@@@@@@\n");
+            printf("@@@@@@@@@@@@@@@@@@@@@@@\n");
         }
-        printf("#####################\n");
+        printf("#######################\n");
+    }
+}
+
+void *run_thread(void *args){
+    thread_args *arguments = (thread_args*) args;
+    unsigned int thread_id = arguments->thread_id;
+    unsigned int core_id = arguments->core_id;
+    unsigned int cpu_id = arguments->cpu_id;
+    machine *machine = arguments->machine;
+    
+    while(1){
+        if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process == NULL){
+            continue;
+        }
+        else{
+            printf("running process:%d, cpu: %d, core: %d, thread:%d\n", machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->pid, machine->cpus[cpu_id]->id, machine->cpus[cpu_id]->cores[core_id]->id, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->id);
+            sleep(2);
+            printf("process end\n");
+            free(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process);
+            machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process = NULL;
+        }
     }
 }
