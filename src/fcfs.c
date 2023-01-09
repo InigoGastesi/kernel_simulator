@@ -9,11 +9,11 @@ process_queue * init_queue(int size){
 }
 
 void push_queue(process_queue *fcfs, pcb* process){
-    if(fcfs->last_pos>=fcfs->size){
+    if(fcfs->last_pos+1>=fcfs->size){
         printf("FCFS queue is full\n");
     }
     else{
-        fcfs->queue[fcfs->last_pos] = process;
+        fcfs->queue[fcfs->last_pos+1] = process;
         fcfs->last_pos++;
     }
 }

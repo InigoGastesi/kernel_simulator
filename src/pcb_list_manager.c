@@ -24,6 +24,9 @@ void *process_generator(void * args){
  * @return
  */
 void add_pcb(pcb_list *pcbList, process_queue *fcfs){
+    if(fcfs->last_pos+1>=fcfs->size){
+        return;
+    }
     pcb *new_process = malloc(sizeof(pcb));
     if (pcbList->first == NULL){
         new_process->pid=_PID;
@@ -39,6 +42,28 @@ void add_pcb(pcb_list *pcbList, process_queue *fcfs){
     }
     push_queue(fcfs, new_process);
 
+}
+
+void delete_pcb(pcb *process, pcb_list *pcbList){
+    if(pcbList->first->pid == process->pid){
+        pcbList->first = pcbList->first->next;
+    }
+    if(pcbList->last->pid == process->pid){
+        pcbList->last = pcbList->last->prev;
+    }
+    if(process->next == NULL){
+        process->prev->next = process->next;
+    }
+    else if(process->prev == NULL)
+    {
+        process->next->prev = process->prev;
+    }
+    else{
+        process->next->prev = process->prev;
+        process->prev->next = process->next;
+    }
+    printf("delete pcb\n");
+    free(process);
 }
 
 /**

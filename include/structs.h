@@ -55,6 +55,7 @@ typedef struct thread_args{
     unsigned int thread_id;
     unsigned int core_id;
     unsigned int cpu_id;
+    struct pcb_list *pcbList;
     struct machine *machine;
 }thread_args;
 

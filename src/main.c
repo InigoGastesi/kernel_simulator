@@ -37,14 +37,14 @@ int main(int argc, char **argv){
     machine *machine = malloc(sizeof(machine));
     int number_of_cpus = 1;
     int number_of_cores = 1;
-    int number_of_threads = 1;
+    int number_of_threads = 2;
     
 
     sem_init(&_PRO_GEN_SEM, 0 ,0);
     sem_init(&_SCHE_SEM, 0, 0);
     
     proGenArgs->pcbList=pcbList;
-    timerProGenArgs->period=10000;
+    timerProGenArgs->period=1000;
     timerProGenArgs->function='p';
     timerScheArgs->period=10000;
     timerScheArgs->function='s';
@@ -102,6 +102,7 @@ int main(int argc, char **argv){
                 threadArgs->cpu_id = i;
                 threadArgs->core_id = j;
                 threadArgs->thread_id = k;
+                threadArgs->pcbList = pcbList;
                 pthread_create(&threadId, NULL, &run_thread, threadArgs);
             }
         }

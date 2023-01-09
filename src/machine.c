@@ -42,6 +42,7 @@ void *run_thread(void *args){
     unsigned int core_id = arguments->core_id;
     unsigned int cpu_id = arguments->cpu_id;
     machine *machine = arguments->machine;
+    pcb_list *pcbList = arguments->pcbList;
     
     while(1){
         if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process == NULL){
@@ -49,9 +50,9 @@ void *run_thread(void *args){
         }
         else{
             printf("running process:%d, cpu: %d, core: %d, thread:%d\n", machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->pid, machine->cpus[cpu_id]->id, machine->cpus[cpu_id]->cores[core_id]->id, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->id);
-            sleep(2);
+            sleep(1);
             printf("process end\n");
-            free(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process);
+            delete_pcb(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process, pcbList);
             machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process = NULL;
         }
     }
