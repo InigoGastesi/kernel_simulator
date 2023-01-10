@@ -1,5 +1,6 @@
 #ifndef _STRUCTS_H
 #define _STRUCTS_H
+#include <semaphore.h>
 typedef struct pcb{
     struct pcb *prev;
     struct pcb *next;
@@ -40,6 +41,7 @@ typedef struct pro_gen_args{
 typedef struct timer_args{
     unsigned int period;
     char function;
+    sem_t *sem;
 }timer_args;
 
 typedef struct clock_args{
@@ -57,6 +59,7 @@ typedef struct thread_args{
     unsigned int cpu_id;
     struct pcb_list *pcbList;
     struct machine *machine;
+    sem_t *sem;
 }thread_args;
 
 typedef struct thread{

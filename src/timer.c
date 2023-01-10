@@ -21,14 +21,17 @@ void* start_timer(void * args){
         case 's':
             sem = &_SCHE_SEM;
             break;
+        case 't':
+            sem = arguments->sem;
+            break;
         default:
             break;
     }
     pthread_mutex_lock(&_CLOCK_MUTEX);
+
     while (1){
         counter++;
         if(counter > period){
-            //seinalea bidali funtzionalitateari
             sem_post(sem);
             counter = 0;
         }

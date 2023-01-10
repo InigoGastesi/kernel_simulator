@@ -43,8 +43,9 @@ void *run_thread(void *args){
     unsigned int cpu_id = arguments->cpu_id;
     machine *machine = arguments->machine;
     pcb_list *pcbList = arguments->pcbList;
-    
+    sem_t *sem = arguments->sem;
     while(1){
+        sem_wait(sem);
         if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process == NULL){
             continue;
         }

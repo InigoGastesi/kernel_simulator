@@ -14,7 +14,7 @@ void *process_generator(void * args){
     while(1){
         sem_wait(&_PRO_GEN_SEM);        
         add_pcb(pcbList, fcfs);
-        print_pcbList(pcbList);
+        //print_pcbList(pcbList);
     }
 }
 
@@ -32,6 +32,7 @@ void add_pcb(pcb_list *pcbList, process_queue *fcfs){
         new_process->pid=_PID;
         pcbList->first=new_process;
         pcbList->last=new_process;
+        push_queue(fcfs, new_process);
     }
     else{
         _PID++;
@@ -39,8 +40,8 @@ void add_pcb(pcb_list *pcbList, process_queue *fcfs){
         new_process->prev = pcbList->last;
         pcbList->last->next=new_process;
         pcbList->last=new_process;
+        push_queue(fcfs, new_process);
     }
-    push_queue(fcfs, new_process);
 
 }
 
@@ -68,7 +69,6 @@ void delete_pcb(pcb *process, pcb_list *pcbList){
         process->next->prev = process->prev;
         process->prev->next = process->next;
     }
-    printf("delete pcb\n");
     free(process);
 }
 

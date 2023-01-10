@@ -21,12 +21,21 @@ process_queue * init_queue(int size){
  * @return
  */
 void push_queue(process_queue *fcfs, pcb* process){
+    pthread_mutex_lock(&_QUEUE);
     if(fcfs->last_pos+1>=fcfs->size){
         printf("FCFS queue is full\n");
     }
     else{
         fcfs->queue[fcfs->last_pos+1] = process;
         fcfs->last_pos++;
+    }
+    pthread_mutex_unlock(&_QUEUE);
+}
+
+void print_queue(process_queue *fcfs){
+    printf("#############################\n");
+    for (int i = 0; i <= fcfs->last_pos; i++){
+        printf("process pid queue: %d\n", fcfs->queue[i]->pid);
     }
 }
 
@@ -36,16 +45,20 @@ void push_queue(process_queue *fcfs, pcb* process){
  * @return queuaren lehenengo elementua.
  */
 pcb *pop_queue(process_queue *fcfs){
+    pthread_mutex_lock(&_QUEUE);
     pcb *process = NULL;
     if(fcfs->last_pos != -1){
         process = fcfs->queue[0];
     
-        for (int i=0; i < fcfs->last_pos-1; i++){
+        for (int i=0; i < fcfs->last_pos; i++){
             fcfs->queue[i] = fcfs->queue[i+1];
         }
         fcfs->last_pos--;
         
     }
+    pthread_mutex_unlock(&_QUEUE);
+
     return process;
+
     
 }

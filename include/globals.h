@@ -6,6 +6,8 @@
 extern pthread_mutex_t _CLOCK_MUTEX;
 extern pthread_mutex_t _PRO_GEN_MUTEX;
 extern pthread_mutex_t _SCHE_MUTEX;
+extern pthread_mutex_t _QUEUE;
+
 
 extern sem_t _PRO_GEN_SEM;
 extern sem_t _SCHE_SEM;
