@@ -19,7 +19,7 @@ void *process_generator(void * args){
 }
 
 /**
- * @brief pcb berri bat sortu eta pcb_listan  sartzen du. 
+ * @brief pcb berri bat sortu, pcb_listan eta process_queuean ere sartzen da. 
  * @param pcb_list pcb_listaren pointer-a
  * @return
  */
@@ -44,6 +44,12 @@ void add_pcb(pcb_list *pcbList, process_queue *fcfs){
 
 }
 
+/**
+ * @brief pcbListatik processu bat kentzen du. 
+ * @param pcb_list pcb_listaren pointer-a
+ * @param process kenduko den prozesuaren pointer-a
+ * @return
+ */
 void delete_pcb(pcb *process, pcb_list *pcbList){
     if(pcbList->first->pid == process->pid){
         pcbList->first = pcbList->first->next;

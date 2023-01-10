@@ -19,6 +19,7 @@ pthread_mutex_t _SCHE_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 
 sem_t _PRO_GEN_SEM;
 sem_t _SCHE_SEM;
+sem_t _THREAD_SEM;
 
 
 unsigned int _PID=0;
@@ -42,6 +43,7 @@ int main(int argc, char **argv){
 
     sem_init(&_PRO_GEN_SEM, 0 ,0);
     sem_init(&_SCHE_SEM, 0, 0);
+    sem_init(&_THREAD_SEM, 0, 0);
     
     proGenArgs->pcbList=pcbList;
     timerProGenArgs->period=1000;
@@ -50,7 +52,7 @@ int main(int argc, char **argv){
     timerScheArgs->function='s';
     clockArgs->timer_kop=2;
     int opt;
-    while((opt = getopt(argc, argv, ":hp:s:q:")) != -1){
+    while((opt = getopt(argc, argv, ":hp:s:q:c:o:t:")) != -1){
         switch (opt){
             case 'p':
                 timerProGenArgs->period=atoi(optarg);
@@ -63,9 +65,16 @@ int main(int argc, char **argv){
                 fcfs = init_queue(atoi(optarg));
                 break;
             case 'c':
+                number_of_cpus = atoi(optarg);
+                break;
+            case 'o':
+                number_of_cores = atoi(optarg);
+                break;
+            case 't':
+                number_of_threads = atoi(optarg);
                 break;
             case 'h':
-                printf("\t[-p][process generator-en periodoa]\n\t[-t][timer kopurua]\n");
+                printf("\t[-p][process generator-en periodoa]\n\t[-s][schedularren periodoa]\n\t[-c][cpu kopurua]\n\t[-o][core kopurua]\n\t[-t][thread kopurua]\n");
                 exit(0);
                 break;
             case ':':

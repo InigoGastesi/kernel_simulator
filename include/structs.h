@@ -5,7 +5,7 @@ typedef struct pcb{
     struct pcb *next;
     int pid;
     int state;
-    int priority;
+    int quantum;
 } pcb;
 
 typedef struct rb_node{

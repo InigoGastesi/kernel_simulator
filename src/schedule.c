@@ -1,9 +1,10 @@
 #include "../include/schedule.h"
 
 /**
- * @brief schedulera martxan jartzen du. Momentuz ez du ezer egiten.
- * Bakarrik timeraren seinale itxaron eta mezu bat printeatu.
- * @param
+ * @brief schedulera martxan jartzen du. 
+ * @param args sche_args estrukturatik argumentuak jasotzen ditu
+ * @param machine machine estruktura
+ * @param fcfs process queuea
  * @return
  */
 void *schedule(void *args){
