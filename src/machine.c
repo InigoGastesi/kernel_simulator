@@ -1,5 +1,12 @@
 #include "../include/machine.h"
-
+/**
+ * @brief machine hasieratzen du.
+ * @param machine machine pointer.
+ * @param number_of_cpus cpu kopurua.
+ * @param number_of_cores core kopurua.
+ * @param number_of_threads thread kopurua.
+ * @return
+ */
 void init_machine(machine *machine, int number_of_cpus, int number_of_cores, int number_of_threads){
     machine->number_of_cpus = number_of_cpus;
     machine->cpus = malloc(number_of_cpus*sizeof(cpu*));
@@ -36,6 +43,18 @@ void print_machine(machine *machine){
     }
 }
 
+/**
+ * @brief machine hasieratzen du.
+ * @param arguments funtzioaren argumentuak.
+ * @param thread_id thread_ren id-a.
+ * @param core_id core_ren id-a.
+ * @param cpu_id cpu_ren id-a.
+ * @param machine cpu-a, core-a eta thread-a daiden datu egitura.
+ * @param pcbList pcb-en lista.
+ * @param sem thread-aren timer-aren semaforoa.
+ * @param processQueue processQueue-a.
+ * @return
+ */
 void *run_thread(void *args){
     thread_args *arguments = (thread_args*) args;
     unsigned int thread_id = arguments->thread_id;
