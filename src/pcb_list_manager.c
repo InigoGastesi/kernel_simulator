@@ -36,6 +36,7 @@ void add_pcb(pcb_list *pcbList, process_queue *processQueue){
         new_process->counter = rand() % 100;
         pcbList->first=new_process;
         pcbList->last=new_process;
+        pcbList->size++;
         push_queue(processQueue, new_process);
     }
     else{
@@ -48,6 +49,7 @@ void add_pcb(pcb_list *pcbList, process_queue *processQueue){
         new_process->prev = pcbList->last;
         pcbList->last->next=new_process;
         pcbList->last=new_process;
+        pcbList->size++;
         push_queue(processQueue, new_process);
     }
 
@@ -77,6 +79,7 @@ void delete_pcb(pcb *process, pcb_list *pcbList){
         process->next->prev = process->prev;
         process->prev->next = process->next;
     }
+    pcbList->size--;
     free(process);
 }
 

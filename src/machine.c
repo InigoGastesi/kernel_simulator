@@ -51,7 +51,7 @@ void *run_thread(void *args){
             continue;
         }
         else{
-            printf("running process:%d, cpu: %d, core: %d, thread:%d\n", machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->pid, machine->cpus[cpu_id]->id, machine->cpus[cpu_id]->cores[core_id]->id, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->id);
+            printf("running process:%d, cpu: %d, core: %d, thread:%d, quantum:%d counter:%d\n", machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->pid, machine->cpus[cpu_id]->id, machine->cpus[cpu_id]->cores[core_id]->id, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->id, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->quantum, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->counter);
             machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->counter-=5;
             machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->quantum -= 5;
             if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->counter <= 0){
@@ -62,7 +62,10 @@ void *run_thread(void *args){
             else if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->quantum <= 0){
                 machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->initial_quantum*=2;
                 machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->quantum=machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->initial_quantum;
+                machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->state = 0;
                 push_queue(processQueue, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process);
+                machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process = NULL;
+                print_queue(processQueue);
             }
             
         }

@@ -23,7 +23,7 @@ process_queue * init_queue(int size){
 void push_queue(process_queue *processQueue, pcb* process){
     pthread_mutex_lock(&_QUEUE);
     if(processQueue->last_pos+1>=processQueue->size){
-        printf("processQueue queue is full\n");
+        //printf("processQueue queue is full\n");
     }
     else{
         processQueue->queue[processQueue->last_pos+1] = process;
@@ -59,6 +59,4 @@ pcb *pop_queue(process_queue *processQueue){
     pthread_mutex_unlock(&_QUEUE);
 
     return process;
-
-    
 }
