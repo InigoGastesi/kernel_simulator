@@ -10,10 +10,10 @@ void *process_generator(void * args){
     pro_gen_args *arguments = (pro_gen_args *)args;
     unsigned int counter = 0;
     pcb_list *pcbList = arguments->pcbList;
-    process_queue *fcfs = arguments->fcfs;
+    process_queue *processQueue = arguments->processQueue;
     while(1){
         sem_wait(&_PRO_GEN_SEM);        
-        add_pcb(pcbList, fcfs);
+        add_pcb(pcbList, processQueue);
         //print_pcbList(pcbList);
     }
 }
@@ -23,24 +23,32 @@ void *process_generator(void * args){
  * @param pcb_list pcb_listaren pointer-a
  * @return
  */
-void add_pcb(pcb_list *pcbList, process_queue *fcfs){
-    if(fcfs->last_pos+1>=fcfs->size){
+void add_pcb(pcb_list *pcbList, process_queue *processQueue){
+    if(pcbList->size >= processQueue->size){
         return;
     }
     pcb *new_process = malloc(sizeof(pcb));
     if (pcbList->first == NULL){
         new_process->pid=_PID;
+        new_process->initial_quantum = 8;
+        new_process->quantum = 8;
+        new_process->state = 0;
+        new_process->counter = rand() % 100;
         pcbList->first=new_process;
         pcbList->last=new_process;
-        push_queue(fcfs, new_process);
+        push_queue(processQueue, new_process);
     }
     else{
         _PID++;
-        new_process->pid = _PID;
+        new_process->pid=_PID;
+        new_process->initial_quantum = 8;
+        new_process->quantum = 8;
+        new_process->state = 0;
+        new_process->counter = rand() % 100;
         new_process->prev = pcbList->last;
         pcbList->last->next=new_process;
         pcbList->last=new_process;
-        push_queue(fcfs, new_process);
+        push_queue(processQueue, new_process);
     }
 
 }

@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "globals.h"
 #include "pcb_list_manager.h"
 void init_machine(machine *machine, int number_of_cpus, int number_of_cores, int number_of_threads);
 void print_machine(machine *machine);

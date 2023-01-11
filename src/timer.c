@@ -3,7 +3,7 @@
 
 /**
  * @brief timera hasieratzen da eta funtzionantzen hasten da.
- * @param timer_args timeraren periodoa eta semaforoaren aukera, 'p' porcess generator, 's' scheduler
+ * @param timer_args timeraren periodoa eta semaforoaren aukera, 'p' porcess generator, 's' scheduler, 't' thread.
  * @return
  */
 void* start_timer(void * args){

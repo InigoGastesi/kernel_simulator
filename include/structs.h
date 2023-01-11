@@ -7,6 +7,8 @@ typedef struct pcb{
     int pid;
     int state;
     int quantum;
+    int initial_quantum;
+    int counter;
 } pcb;
 
 typedef struct rb_node{
@@ -31,11 +33,12 @@ typedef struct process_queue{
 typedef struct pcb_list{
     struct pcb *first;
     struct pcb *last;
+    int size;
 } pcb_list;
 
 typedef struct pro_gen_args{
     struct pcb_list *pcbList;
-    struct process_queue *fcfs;
+    struct process_queue *processQueue;
 }pro_gen_args;
 
 typedef struct timer_args{
@@ -50,7 +53,7 @@ typedef struct clock_args{
 
 typedef struct sche_args{
     struct machine *machine;
-    struct process_queue *fcfs;
+    struct process_queue *processQueue;
 }sche_args;
 
 typedef struct thread_args{
@@ -59,6 +62,7 @@ typedef struct thread_args{
     unsigned int cpu_id;
     struct pcb_list *pcbList;
     struct machine *machine;
+    struct process_queue *processQueue;
     sem_t *sem;
 }thread_args;
 

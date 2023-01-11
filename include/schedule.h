@@ -2,6 +2,6 @@
 #define _SCHE_H
 #include <stdio.h>
 #include "globals.h"
-#include "fcfs.h"
+#include "process_queue_manager.h"
 void *schedule(void *args);
 #endif

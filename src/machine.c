@@ -44,6 +44,7 @@ void *run_thread(void *args){
     machine *machine = arguments->machine;
     pcb_list *pcbList = arguments->pcbList;
     sem_t *sem = arguments->sem;
+    process_queue *processQueue = arguments->processQueue;
     while(1){
         sem_wait(sem);
         if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process == NULL){
@@ -51,10 +52,19 @@ void *run_thread(void *args){
         }
         else{
             printf("running process:%d, cpu: %d, core: %d, thread:%d\n", machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->pid, machine->cpus[cpu_id]->id, machine->cpus[cpu_id]->cores[core_id]->id, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->id);
-            sleep(1);
-            printf("process end\n");
-            delete_pcb(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process, pcbList);
-            machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process = NULL;
+            machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->counter-=5;
+            machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->quantum -= 5;
+            if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->counter <= 0){
+                printf("Prozesua bukatu da: PID %d\n", machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->pid);
+                delete_pcb(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process, pcbList);
+                machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process = NULL;
+            }
+            else if(machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->quantum <= 0){
+                machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->initial_quantum*=2;
+                machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->quantum=machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process->initial_quantum;
+                push_queue(processQueue, machine->cpus[cpu_id]->cores[core_id]->threads[thread_id]->process);
+            }
+            
         }
     }
 }
